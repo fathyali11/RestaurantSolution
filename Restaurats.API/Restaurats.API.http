@@ -1,0 +1,15 @@
+@Restaurats.API_HostAddress = https://localhost:7163
+
+GET {{Restaurats.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{Restaurats.API_HostAddress}}/weatherforecast
+Content-Type: application/json
+
+{
+  //WeatherForecast
+}
+
+###
