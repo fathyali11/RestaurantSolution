@@ -6,15 +6,13 @@ using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurats.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurats.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurats.Application.Restaurants.Queries.GetRestaurant;
-using Restaurats.Application.Restaurants.Services;
 
 namespace Restaurats.API.Controllers;
 [Route("api/[controller]")]
 [ApiController]
-public class RestaurantsController(IRestaurantService restaurantService,IMediator mediator) : ControllerBase
+public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator;
-    private readonly IRestaurantService _restaurantService = restaurantService;
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateRestaurantCommand request, CancellationToken cancellationToken = default)

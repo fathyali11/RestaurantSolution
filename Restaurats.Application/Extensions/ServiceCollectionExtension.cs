@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Restaurats.Application.Restaurants.Services;
 using Mapster;
 using Restaurats.Application.Restaurants.Dtos;
 using Restaurats.Application.Dishes.Dtos;
@@ -23,7 +22,6 @@ public static class ServiceCollectionExtension
         });
         services.AddValidatorsFromAssemblyContaining<CreateRestaurantCommandValidator>();
 
-        services.AddScoped<IRestaurantService, RestaurantService>();
         return services;
     }
 }
