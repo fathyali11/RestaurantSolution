@@ -26,6 +26,23 @@ GET {{Restaurats.API_HostAddress}}/api/restaurants
 
 ###
 
-GET {{Restaurats.API_HostAddress}}/api/restaurants
+GET {{Restaurats.API_HostAddress}}/api/restaurants/1
+
+###
+
+PUT {{Restaurats.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "Tasty Bites",
+    "description": "A cozy place with delicious homemade meals.",
+    "hasDelivery": true
+}
+
+###
+
+@id=2
+GET {{Restaurats.API_HostAddress}}/api/restaurants/{{id}}
 
 ###

@@ -33,14 +33,9 @@ public class RestaurantService(IUnitOfWork unitOfWork,IMapper mapper) : IRestaur
         var restaurant = await _unitOfWork
             .Restaurant.GetByIdAsync(id);
 
-        if (restaurant is not null)
+        if (restaurant is null)
             return null;
         return _mapper.Map<RestaurantResponse>(restaurant!);
 
-    }
-
-    public Task<RestaurantResponse> UpdateRestaurant(int id, CreateRestaurantCommand request, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
     }
 }

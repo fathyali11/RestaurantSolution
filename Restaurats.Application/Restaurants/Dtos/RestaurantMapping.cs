@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Restaurats.API.UpdateRestaurant;
 using Restaurats.Application.Dishes.Dtos;
 using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurats.Domain.Entities;
@@ -25,7 +26,10 @@ internal class RestaurantMapping
             .Map(dest => dest.Dishes, src => src.Dishes.Adapt<List<Dish>>());
 
 
-
+        TypeAdapterConfig<UpdateRestaurantCommand, Restaurant>.NewConfig()
+            .Map(dest => dest.Name, src => src.Name)
+            .Map(dest => dest.Description, src => src.Description)
+            .Map(dest => dest.HasDelivery, src => src.HasDelivery);
 
     }
 }
