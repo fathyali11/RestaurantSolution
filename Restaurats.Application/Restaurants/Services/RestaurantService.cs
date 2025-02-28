@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using MapsterMapper;
+using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurats.Application.Restaurants.Dtos;
 using Restaurats.Domain.Entities;
 using Restaurats.Domain.Repositories;
@@ -9,13 +10,7 @@ public class RestaurantService(IUnitOfWork unitOfWork,IMapper mapper) : IRestaur
 {
     private readonly IMapper _mapper = mapper;
     private readonly IUnitOfWork _unitOfWork= unitOfWork;
-    public async Task<RestaurantResponse> CreateRestaurant(CreateRestaurantRequest request, CancellationToken cancellationToken = default)
-    {
-        var restaurant = request.Adapt<Restaurant>();
-        restaurant= await _unitOfWork.Restaurant.AddAsync(restaurant,cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return restaurant.Adapt<RestaurantResponse>();
-    }
+    
 
     public Task DeleteRestaurant(int id, CancellationToken cancellationToken = default)
     {
@@ -33,12 +28,18 @@ public class RestaurantService(IUnitOfWork unitOfWork,IMapper mapper) : IRestaur
         return response1;
     }
 
-    public Task<RestaurantResponse> GetRestaurant(int id, CancellationToken cancellationToken = default)
+    public async Task<RestaurantResponse?> GetRestaurant(int id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var restaurant = await _unitOfWork
+            .Restaurant.GetByIdAsync(id);
+
+        if (restaurant is not null)
+            return null;
+        return _mapper.Map<RestaurantResponse>(restaurant!);
+
     }
 
-    public Task<RestaurantResponse> UpdateRestaurant(int id, CreateRestaurantRequest request, CancellationToken cancellationToken = default)
+    public Task<RestaurantResponse> UpdateRestaurant(int id, CreateRestaurantCommand request, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

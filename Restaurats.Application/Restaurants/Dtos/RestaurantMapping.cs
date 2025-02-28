@@ -1,8 +1,9 @@
 ﻿using Mapster;
 using Restaurats.Application.Dishes.Dtos;
+using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurats.Domain.Entities;
 
-namespace Restaurats.Application.Restaurants.Dtos.Mappings;
+namespace Restaurats.Application.Restaurants.Dtos;
 internal class RestaurantMapping
 {
     public static void Configue()
@@ -14,7 +15,7 @@ internal class RestaurantMapping
             .Map(dest => dest.Dishes, src => src.Dishes.Adapt<List<DishResponse>>());
 
 
-        TypeAdapterConfig<CreateRestaurantRequest, Restaurant>.NewConfig()
+        TypeAdapterConfig<CreateRestaurantCommand, Restaurant>.NewConfig()
             .Map(dest => dest.Address, src => new Address
             {
                 City = src.City,
@@ -23,8 +24,8 @@ internal class RestaurantMapping
             })
             .Map(dest => dest.Dishes, src => src.Dishes.Adapt<List<Dish>>());
 
-        
-        
+
+
 
     }
 }

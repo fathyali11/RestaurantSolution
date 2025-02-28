@@ -5,7 +5,7 @@ POST {{Restaurats.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 
 {
-  "name": "Tasty Bites",
+  "name": "Tasty Bites test",
   "description": "A cozy place with delicious homemade meals.",
   "category": "Casual Dining",
   "city": "Los Angeles",
@@ -22,6 +22,10 @@ Content-Type: application/json
 }
 
 ###
+GET {{Restaurats.API_HostAddress}}/api/restaurants
+
+###
+
 GET {{Restaurats.API_HostAddress}}/api/restaurants
 
 ###
