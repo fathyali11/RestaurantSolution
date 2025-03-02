@@ -16,7 +16,7 @@ public class GetAllRestaurantsQueryHandler(IUnitOfWork unitOfWork,
         _logger.LogInformation("Try To Get Restaurant From Database");
         var restaurants = await _unitOfWork
         .Restaurant
-        .GetAllAsync(cancellationToken);
+        .GetAllAsync(cancellationToken:cancellationToken);
         var response = restaurants.Adapt<IEnumerable<RestaurantResponse>>();
         return response;
     }

@@ -18,7 +18,7 @@ internal class GetRestaurantQueryHandler(IUnitOfWork unitOfWork,
     {
         _logger.LogInformation("Try To Get Restaurant From Database");
         var restaurant = await _unitOfWork
-            .Restaurant.GetByIdAsync(request.Id);
+            .Restaurant.GetByIdAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
 
         if (restaurant is null)
             throw new NotFoundException(nameof(Restaurant), request.Id.ToString());

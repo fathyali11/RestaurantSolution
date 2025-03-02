@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Restaurats.Domain;
 using Restaurats.Domain.Repositories;
 using Restaurats.Infrastructure.Presistence;
 using Restaurats.Infrastructure.Repositories;
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IRestaurantSeeder,RestaurantSeeder>();
         services.AddScoped<IRestaurantRepository,RestaurantRepository>();
+        services.AddScoped<IDishRepository, DishRepository>();
         services.AddScoped<IUnitOfWork,UnitOfWork>();
 
 

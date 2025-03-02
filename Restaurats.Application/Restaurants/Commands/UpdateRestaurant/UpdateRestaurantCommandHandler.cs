@@ -16,7 +16,7 @@ public class UpdateRestaurantCommandHandler(IUnitOfWork unitOfWork,IMapper mappe
     public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Get Restaurant From Database");
-        var restaurantFromDb = await _unitOfWork.Restaurant.GetByIdAsync(request.Id);
+        var restaurantFromDb = await _unitOfWork.Restaurant.GetByIdAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
         if (restaurantFromDb is null)
             throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
 

@@ -13,7 +13,7 @@ internal class DeleteRestaurantCommandHandler(IUnitOfWork unitOfWork,ILogger<Del
     public async Task Handle(DeleteRestaurantCommand request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Get Restaurant From Database");
-        var restaurantFromDb = await _unitOfWork.Restaurant.GetByIdAsync(request.Id);
+        var restaurantFromDb = await _unitOfWork.Restaurant.GetByIdAsync(x => x.Id == request.Id, cancellationToken: cancellationToken);
         if (restaurantFromDb is null)
             throw new NotFoundException(nameof(Restaurant),request.Id.ToString());
         _logger.LogInformation("try to delete restaurant from db");

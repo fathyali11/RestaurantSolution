@@ -18,5 +18,8 @@ internal class CreateDishCommandValidator: AbstractValidator<CreateDishCommand>
 
         RuleFor(x => x.KiloCalories)
             .GreaterThan(0).WithMessage("KiloCalories must be greater than zero.");
+
+        RuleFor(x => x.RestaurantId)
+            .GreaterThan(0).WithMessage("RestaurantId must be greater than zero.");
     }
 }

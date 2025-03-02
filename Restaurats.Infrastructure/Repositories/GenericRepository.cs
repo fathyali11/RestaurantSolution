@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using System.Threading;
+using Microsoft.EntityFrameworkCore;
 using Restaurats.Domain.Repositories;
 using Restaurats.Infrastructure.Presistence;
 
@@ -17,12 +19,34 @@ internal class GenericRepository<T>(RestaurantDbContext context) : IGenericRepos
         _dbSet.Remove(entity);
         return Task.CompletedTask;
     }
-    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, string? includeObjs = null, CancellationToken cancellationToken = default)
     {
-        return await _dbSet.ToListAsync(cancellationToken);
+        var query= _dbSet.AsQueryable();
+        if (predicate is not null)
+            query = query.Where(predicate);
+        if(!string.IsNullOrWhiteSpace(includeObjs))
+        {
+            var includeProperties = includeObjs.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+        }
+        return await query.ToListAsync(cancellationToken);
     }
-    public async Task<T?> GetByIdAsync(int id)
+    public async Task<T?> GetByIdAsync(Expression<Func<T, bool>>? predicate = null, string? includeObjs = null, CancellationToken cancellationToken=default)
     {
-        return await _dbSet.FindAsync(id);
+        var query = _dbSet.AsQueryable();
+        if (predicate is not null)
+            query = query.Where(predicate);
+        if (!string.IsNullOrWhiteSpace(includeObjs))
+        {
+            var includeProperties = includeObjs.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+        }
+        return await query.FirstOrDefaultAsync(cancellationToken);
     }
 }
