@@ -1,3 +1,4 @@
+using Restaurats.API.Middlewares;
 using Restaurats.Application.Extensions;
 using Restaurats.Infrastructure.Extensions;
 using Restaurats.Infrastructure.Seeders;
@@ -20,6 +21,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 
 var app = builder.Build();
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSerilogRequestLogging();
 
 // Configure the HTTP request pipeline.
@@ -29,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

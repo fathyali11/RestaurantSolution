@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Restaurats.Application.Restaurants.Dtos;
+using Restaurats.Domain.Entities;
+using Restaurats.Domain.Exceptions;
 using Restaurats.Domain.Repositories;
 
 namespace Restaurats.Application.Restaurants.Queries.GetRestaurant;
@@ -19,10 +21,7 @@ internal class GetRestaurantQueryHandler(IUnitOfWork unitOfWork,
             .Restaurant.GetByIdAsync(request.Id);
 
         if (restaurant is null)
-        {
-            _logger.LogInformation("Restaurant Not Found");
-            return null;
-        }
+            throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
         _logger.LogInformation("Restaurant Found");
         return _mapper.Map<RestaurantResponse>(restaurant!);
     }
