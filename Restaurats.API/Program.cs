@@ -29,7 +29,9 @@ if (app.Environment.IsDevelopment())
 }
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
-app.MapGroup("api/identity").MapIdentityApi<ApplicationUser>();
+app.MapGroup("api/identity")
+    .WithTags("Identity")
+    .MapIdentityApi<ApplicationUser>();
 app.UseAuthorization();
 
 app.MapControllers();
