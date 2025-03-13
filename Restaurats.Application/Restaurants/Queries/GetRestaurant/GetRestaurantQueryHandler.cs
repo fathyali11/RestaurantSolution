@@ -9,12 +9,12 @@ using Restaurats.Domain.Repositories;
 namespace Restaurats.Application.Restaurants.Queries.GetRestaurant;
 internal class GetRestaurantQueryHandler(IUnitOfWork unitOfWork,
     IMapper mapper,ILogger<GetRestaurantQueryHandler> logger) :
-    IRequestHandler<GetRestaurantQuery, RestaurantResponse?>
+    IRequestHandler<GetRestaurantQuery, RestaurantWithDishesResponse?>
 {
     private readonly IUnitOfWork _unitOfWork=unitOfWork;
     private readonly IMapper _mapper=mapper;
     private readonly ILogger<GetRestaurantQueryHandler> _logger = logger;
-    public async Task<RestaurantResponse?> Handle(GetRestaurantQuery request, CancellationToken cancellationToken)
+    public async Task<RestaurantWithDishesResponse?> Handle(GetRestaurantQuery request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Try To Get Restaurant From Database");
         var restaurant = await _unitOfWork
@@ -23,6 +23,6 @@ internal class GetRestaurantQueryHandler(IUnitOfWork unitOfWork,
         if (restaurant is null)
             throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
         _logger.LogInformation("Restaurant Found");
-        return _mapper.Map<RestaurantResponse>(restaurant!);
+        return _mapper.Map<RestaurantWithDishesResponse>(restaurant!);
     }
 }

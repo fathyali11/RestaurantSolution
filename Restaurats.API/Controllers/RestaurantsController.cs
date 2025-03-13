@@ -29,9 +29,9 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         return NoContent();
     }
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+    public async Task<IActionResult> GetAll([FromQuery]GetAllRestaurantsQuery query,CancellationToken cancellationToken = default)
     {
-        var response = await _mediator.Send(new GetAllRestaurantsQuery(), cancellationToken);
+        var response = await _mediator.Send(query, cancellationToken);
         return Ok(response);
     }
 

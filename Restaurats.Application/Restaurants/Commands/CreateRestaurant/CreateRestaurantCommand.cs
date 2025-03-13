@@ -1,16 +1,17 @@
-﻿using System.Net;
-using MediatR;
-using Restaurats.Application.Dishes.Commands.CreateDish;
+﻿using MediatR;
 using Restaurats.Application.Restaurants.Dtos;
 
 namespace Restaurats.Application.Restaurants.Commands.CreateRestaurant;
-public record CreateRestaurantCommand(
-    string Name,
-    string Description,
-    string Category,
-    string City,
-    string Street,
-    string PostalCode,
-    string LogoSasUrl,
-    List<CreateDishCommand> Dishes
-):IRequest<RestaurantResponse>;
+public class CreateRestaurantCommand : IRequest<RestaurantResponse>
+{
+    public string Name { get; set; } = default!;
+    public string Description { get; set; } = default!;
+    public string Category { get; set; } = default!;
+    public bool HasDelivery { get; set; }
+    public string? ContactEmail { get; set; }
+    public string? ContactNumber { get; set; }
+    public string? City { get; set; }
+    public string? Street { get; set; }
+    public string? PostalCode { get; set; }
+}
+

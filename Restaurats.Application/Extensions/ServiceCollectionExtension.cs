@@ -4,6 +4,7 @@ using Restaurats.Application.Restaurants.Dtos;
 using Restaurats.Application.Dishes.Dtos;
 using FluentValidation;
 using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
+using Restaurats.Application.ApplicationUser;
 
 namespace Restaurats.Application.Extensions;
 public static class ServiceCollectionExtension
@@ -22,6 +23,8 @@ public static class ServiceCollectionExtension
         });
         services.AddValidatorsFromAssemblyContaining<CreateRestaurantCommandValidator>();
 
+        services.AddScoped<IUserContext, UserContext>();
+        services.AddHttpContextAccessor();
         return services;
     }
 }

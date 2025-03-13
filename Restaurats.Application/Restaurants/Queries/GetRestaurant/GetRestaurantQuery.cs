@@ -2,4 +2,4 @@
 using Restaurats.Application.Restaurants.Dtos;
 
 namespace Restaurats.Application.Restaurants.Queries.GetRestaurant;
-public record GetRestaurantQuery(int Id) : IRequest<RestaurantResponse>;
+public record GetRestaurantQuery(int Id) : IRequest<RestaurantWithDishesResponse>;

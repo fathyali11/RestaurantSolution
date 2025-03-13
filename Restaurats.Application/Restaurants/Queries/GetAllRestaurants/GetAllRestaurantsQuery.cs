@@ -1,7 +1,8 @@
 ﻿using MediatR;
+using Restaurats.Application.Common;
 using Restaurats.Application.Restaurants.Dtos;
 
 namespace Restaurats.Application.Restaurants.Queries.GetAllRestaurants;
-public class GetAllRestaurantsQuery:IRequest<IEnumerable<RestaurantResponse>>
-{
-}
+public record GetAllRestaurantsQuery(string SearchTerm,string SortBy, string OrderDirection,int PageNumber,int PageSize)
+    :IRequest<PaginatedResult<RestaurantWithDishesResponse>>;
+

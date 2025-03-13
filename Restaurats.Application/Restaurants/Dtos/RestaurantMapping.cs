@@ -5,16 +5,20 @@ using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurats.Domain.Entities;
 
 namespace Restaurats.Application.Restaurants.Dtos;
-internal class RestaurantMapping
+public class RestaurantMapping
 {
     public static void Configue()
     {
-        TypeAdapterConfig<Restaurant, RestaurantResponse>.NewConfig()
+        TypeAdapterConfig<Restaurant, RestaurantWithDishesResponse>.NewConfig()
             .Map(dest => dest.City, src => src.Address!.City)
             .Map(dest => dest.Street, src => src.Address!.Street)
             .Map(dest => dest.PostalCode, src => src.Address!.PostalCode)
             .Map(dest => dest.Dishes, src => src.Dishes.Adapt<List<DishResponse>>());
 
+        TypeAdapterConfig<Restaurant, RestaurantResponse>.NewConfig()
+            .Map(dest => dest.City, src => src.Address!.City)
+            .Map(dest => dest.Street, src => src.Address!.Street)
+            .Map(dest => dest.PostalCode, src => src.Address!.PostalCode);
 
         TypeAdapterConfig<CreateRestaurantCommand, Restaurant>.NewConfig()
             .Map(dest => dest.Address, src => new Address
@@ -22,8 +26,7 @@ internal class RestaurantMapping
                 City = src.City,
                 Street = src.Street,
                 PostalCode = src.PostalCode
-            })
-            .Map(dest => dest.Dishes, src => src.Dishes.Adapt<List<Dish>>());
+            });
 
 
         TypeAdapterConfig<UpdateRestaurantCommand, Restaurant>.NewConfig()

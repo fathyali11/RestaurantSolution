@@ -6,6 +6,8 @@ using Restaurats.Domain.Repositories;
 using Restaurats.Infrastructure.Presistence;
 using Restaurats.Infrastructure.Repositories;
 using Restaurats.Infrastructure.Seeders;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Restaurats.Domain.Entities;
 
 namespace Restaurats.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
@@ -22,6 +24,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IRestaurantRepository,RestaurantRepository>();
         services.AddScoped<IDishRepository, DishRepository>();
         services.AddScoped<IUnitOfWork,UnitOfWork>();
+
+        services.AddIdentityApiEndpoints<ApplicationUser>()
+            .AddEntityFrameworkStores<RestaurantDbContext>();
 
 
         return services;
