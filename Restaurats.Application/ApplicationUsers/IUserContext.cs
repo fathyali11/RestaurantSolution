@@ -1,4 +1,4 @@
-﻿namespace Restaurats.Application.ApplicationUser;
+﻿namespace Restaurats.Application.ApplicationUsers;
 
 public interface IUserContext
 {

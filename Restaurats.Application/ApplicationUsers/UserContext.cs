@@ -1,7 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
-namespace Restaurats.Application.ApplicationUser;
+namespace Restaurats.Application.ApplicationUsers;
 public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContext
 {
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
