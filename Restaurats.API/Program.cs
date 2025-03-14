@@ -4,6 +4,7 @@ using Restaurats.Domain.Entities;
 using Restaurats.Infrastructure.Extensions;
 using Serilog;
 using Restaurats.API.Extensions;
+using Restaurats.Infrastructure.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 
 var app = builder.Build();
+var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+var seeders=services.GetRequiredService<IRestaurantSeeder>();
+await seeders.SeedAsync();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseSerilogRequestLogging();
 

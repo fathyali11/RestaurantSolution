@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Restaurats.Domain.Constants;
 using Restaurats.Domain.Entities;
 using Restaurats.Infrastructure.Presistence;
 
@@ -15,7 +17,22 @@ internal class RestaurantSeeder(RestaurantDbContext context) : IRestaurantSeeder
                 await _context.Restaurants.AddRangeAsync(GetRestaurants());
                 await _context.SaveChangesAsync();
             }
+            if(!await _context.Roles.AnyAsync())
+            {
+                await _context.Roles.AddRangeAsync(GetRoles());
+                await _context.SaveChangesAsync();
+            }
         }
+    }
+
+    private IEnumerable<IdentityRole> GetRoles()
+    {
+        List<IdentityRole> roles = [
+            new() { Name = UserRoles.AdminRole, NormalizedName = UserRoles.AdminRole.ToUpper(),ConcurrencyStamp=Guid.CreateVersion7().ToString() },
+            new() { Name = UserRoles.OwnerRole, NormalizedName = UserRoles.OwnerRole.ToUpper(),ConcurrencyStamp=Guid.CreateVersion7().ToString() },
+            new() { Name = UserRoles.UserRole, NormalizedName = UserRoles.UserRole.ToUpper() ,ConcurrencyStamp=Guid.CreateVersion7().ToString()}
+        ];
+        return roles;
     }
     private IEnumerable<Restaurant> GetRestaurants()
     {

@@ -1,10 +1,12 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Restaurats.API.UpdateRestaurant;
 using Restaurats.Application.Restaurants.Commands.CreateRestaurant;
 using Restaurats.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurats.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurats.Application.Restaurants.Queries.GetRestaurant;
+using Restaurats.Domain.Constants;
 
 namespace Restaurats.API.Controllers;
 [Route("api/[controller]")]
@@ -14,6 +16,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     private readonly IMediator _mediator = mediator;
 
     [HttpPost]
+    [Authorize(Roles = UserRoles.AdminRole)]
     public async Task<IActionResult> Create([FromBody] CreateRestaurantCommand request, CancellationToken cancellationToken = default)
     {
         var response = await _mediator.Send(request, cancellationToken);
