@@ -7,6 +7,7 @@ using Restaurats.Application.Restaurants.Commands.DeleteRestaurant;
 using Restaurats.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurats.Application.Restaurants.Queries.GetRestaurant;
 using Restaurats.Domain.Constants;
+using Restaurats.Infrastructure.Authorization.Constants;
 
 namespace Restaurats.API.Controllers;
 [Route("api/[controller]")]
@@ -32,6 +33,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         return NoContent();
     }
     [HttpGet]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<IActionResult> GetAll([FromQuery]GetAllRestaurantsQuery query,CancellationToken cancellationToken = default)
     {
         var response = await _mediator.Send(query, cancellationToken);
@@ -39,12 +41,14 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<IActionResult> Get([FromRoute]int id,CancellationToken cancellationToken = default)
     {
         var response = await _mediator.Send(new GetRestaurantQuery(id), cancellationToken);
         return Ok(response);
     }
     [HttpDelete("{id}")]
+    
     public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken = default)
     {
         await _mediator.Send(new DeleteRestaurantCommand(id), cancellationToken);

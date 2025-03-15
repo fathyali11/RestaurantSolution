@@ -9,6 +9,8 @@ using Restaurats.Infrastructure.Seeders;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Restaurats.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Restaurats.Infrastructure.Authorization;
+using Restaurats.Infrastructure.Authorization.Constants;
 
 namespace Restaurats.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
@@ -28,8 +30,12 @@ public static class ServiceCollectionExtensions
 
         services.AddIdentityApiEndpoints<ApplicationUser>()
             .AddRoles<IdentityRole>()
+            .AddClaimsPrincipalFactory<RestaurantUserClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<RestaurantDbContext>();
 
+        services.AddAuthorizationBuilder()
+             .AddPolicy(PolicyNames.HasNationality, policy =>
+                 policy.RequireClaim(AppClaimTypes.Nationality));
 
         return services;
     }
