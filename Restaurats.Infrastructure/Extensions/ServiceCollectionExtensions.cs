@@ -13,6 +13,8 @@ using Restaurats.Infrastructure.Authorization;
 using Restaurats.Infrastructure.Authorization.Constants;
 using Restaurats.Infrastructure.Authorization.Requirments;
 using Microsoft.AspNetCore.Authorization;
+using Restaurats.Domain.Interfaces;
+using Restaurats.Infrastructure.Authorization.Services;
 
 namespace Restaurats.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
@@ -36,7 +38,7 @@ public static class ServiceCollectionExtensions
             .AddEntityFrameworkStores<RestaurantDbContext>();
 
         services.AddScoped<IAuthorizationHandler, MinimumAgeRequirmentHandler>();
-        
+        services.AddScoped<IRestaurantAuthorizationService, RestaurantAuthorizationService>();
 
         services.AddAuthorizationBuilder()
              .AddPolicy(PolicyNames.HasNationality, policy =>
