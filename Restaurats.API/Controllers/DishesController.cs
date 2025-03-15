@@ -27,14 +27,14 @@ public class DishesController(IMediator mediator):ControllerBase
         return Ok(response);
     }
     [HttpGet]
-    public async Task<IActionResult> GetAll([FromRoute]int restaurnatId,CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll([FromRoute]int restaurantId, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetAllDishesQuery(restaurnatId), cancellationToken);
+        var response = await _mediator.Send(new GetAllDishesQuery(restaurantId), cancellationToken);
         return Ok(response);
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete([FromRoute] int restaurantId,CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Delete([FromRoute] int restaurantId, CancellationToken cancellationToken = default)
     {
         await _mediator.Send(new DeleteDishesForRestaurantCommand(restaurantId), cancellationToken);
         return NoContent();

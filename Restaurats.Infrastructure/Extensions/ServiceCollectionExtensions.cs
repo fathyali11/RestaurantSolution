@@ -11,6 +11,8 @@ using Restaurats.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Restaurats.Infrastructure.Authorization;
 using Restaurats.Infrastructure.Authorization.Constants;
+using Restaurats.Infrastructure.Authorization.Requirments;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Restaurats.Infrastructure.Extensions;
 public static class ServiceCollectionExtensions
@@ -33,9 +35,15 @@ public static class ServiceCollectionExtensions
             .AddClaimsPrincipalFactory<RestaurantUserClaimsPrincipalFactory>()
             .AddEntityFrameworkStores<RestaurantDbContext>();
 
+        services.AddScoped<IAuthorizationHandler, MinimumAgeRequirmentHandler>();
+        
+
         services.AddAuthorizationBuilder()
              .AddPolicy(PolicyNames.HasNationality, policy =>
-                 policy.RequireClaim(AppClaimTypes.Nationality));
+                 policy.RequireClaim(AppClaimTypes.Nationality))
+
+               .AddPolicy(PolicyNames.MinimumAge, policy =>
+                    policy.Requirements.Add(new MinimumAgeRequirment(18)));
 
         return services;
     }
