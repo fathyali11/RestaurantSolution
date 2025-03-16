@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurats.Application", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurats.Infrastructure", "Restaurats.Infrastructure\Restaurats.Infrastructure.csproj", "{0241ED6F-5A46-4DEF-B3DB-25726710CE99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurats.Application.Tests", "Restaurats.Application.Tests\Restaurats.Application.Tests.csproj", "{49A52C2A-F823-4C97-85F5-243EE3C8ED67}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{0241ED6F-5A46-4DEF-B3DB-25726710CE99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0241ED6F-5A46-4DEF-B3DB-25726710CE99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0241ED6F-5A46-4DEF-B3DB-25726710CE99}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49A52C2A-F823-4C97-85F5-243EE3C8ED67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49A52C2A-F823-4C97-85F5-243EE3C8ED67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49A52C2A-F823-4C97-85F5-243EE3C8ED67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49A52C2A-F823-4C97-85F5-243EE3C8ED67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
