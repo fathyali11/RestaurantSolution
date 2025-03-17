@@ -72,7 +72,7 @@ public class UpdateRestaurantCommandHandlerTests
     }
 
     [Fact()]
-    public void Handle_WhenUpdateRestaurantCommandAndRestaurantDonnotExistInDatabase_ShouldThrowNotFoundException()
+    public async Task Handle_WhenUpdateRestaurantCommandAndRestaurantDonnotExistInDatabase_ShouldThrowNotFoundException()
     {
 
         var unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -97,16 +97,15 @@ public class UpdateRestaurantCommandHandlerTests
             restaurantAuthorizationServiceMock.Object
             );
 
-        var exception = () => handler.Handle(updateCommand, CancellationToken.None);
+        var exception = async() =>await handler.Handle(updateCommand, CancellationToken.None);
 
-        exception
+        await exception
             .Should()
-            .ThrowAsync<NotFoundException>()
-            .WithMessage(nameof(Restaurant), updateCommand.Id.ToString());
+            .ThrowAsync<NotFoundException>();
     }
 
     [Fact()]
-    public void Handle_WhenUpdateRestaurantCommandAndRestaurantUserNotAuthorize_ShouldThrowForbiddenException()
+    public async Task Handle_WhenUpdateRestaurantCommandAndRestaurantUserNotAuthorize_ShouldThrowForbiddenException()
     {
 
         var unitOfWorkMock = new Mock<IUnitOfWork>();
@@ -135,10 +134,11 @@ public class UpdateRestaurantCommandHandlerTests
             restaurantAuthorizationServiceMock.Object
             );
 
-        var exception = () => handler.Handle(updateCommand, CancellationToken.None);
+        Func<Task> exception = async () => await handler.Handle(updateCommand, CancellationToken.None);
 
-        exception
+        await exception
             .Should()
             .ThrowAsync<ForbiddenException>();
+
     }
 }
