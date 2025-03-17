@@ -25,7 +25,7 @@ public class UpdateRestaurantCommandHandler(IUnitOfWork _unitOfWork,
         if (!_restaurantAuthorizationService.Authorize(restaurantFromDb, ResourceOperation.Update))
             throw new ForbiddenException();
 
-        var restaurant = _mapper.Map(request, restaurantFromDb);
+        _mapper.Map(request, restaurantFromDb);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         _logger.LogInformation("restaurant was updated");
     }

@@ -26,6 +26,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(Get), new { id = response.Id }, response);
     }
     [HttpPut("{id}")]
+    [Authorize(Roles = UserRoles.AdminRole)]
     public async Task<IActionResult> Update([FromRoute]int id,[FromBody] UpdateRestaurantCommand request, CancellationToken cancellationToken = default)
     {
         request.Id = id;
