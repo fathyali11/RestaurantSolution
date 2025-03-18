@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Restaurats.API\Restaurats.API.csproj" />
+    <ProjectReference Include="..\..\src\Restaurats.API\Restaurats.API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
