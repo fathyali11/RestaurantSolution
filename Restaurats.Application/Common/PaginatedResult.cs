@@ -8,6 +8,7 @@ public class PaginatedResult<T>(IEnumerable<T> items, int count, int pageNumber,
     public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);
     public bool HasPreviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;
+    
     public static PaginatedResult<T> Create(IEnumerable<T> source, int pageNumber=1, int pageSize=10)
     {
         int count = source.Count();

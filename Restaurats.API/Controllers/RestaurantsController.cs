@@ -34,7 +34,6 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
         return NoContent();
     }
     [HttpGet]
-    [Authorize(Policy = PolicyNames.MinimumAge)]
     public async Task<IActionResult> GetAll([FromQuery]GetAllRestaurantsQuery query,CancellationToken cancellationToken = default)
     {
         var response = await _mediator.Send(query, cancellationToken);
