@@ -19,7 +19,9 @@ public class GetAllRestaurantsQueryHandler(IUnitOfWork unitOfWork,
         .Restaurant
         .GetAllPagedAsync(request.SearchTerm,request.SortBy,request.OrderDirection,cancellationToken:cancellationToken);
         var response = restaurants.Adapt<IEnumerable<RestaurantWithDishesResponse>>();
-        var pagedResponse=new PaginatedResult<RestaurantWithDishesResponse>(response,response.Count(), request.PageNumber, request.PageSize);
+        int pageNumber= request.PageNumber.HasValue? request.PageNumber.Value : 1;
+        int pageSize = request.PageSize.HasValue ? request.PageSize.Value : 10;
+        var pagedResponse=new PaginatedResult<RestaurantWithDishesResponse>(response,response.Count(),pageNumber,pageSize);
         return pagedResponse;
     }
 }

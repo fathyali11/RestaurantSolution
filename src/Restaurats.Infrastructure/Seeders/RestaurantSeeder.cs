@@ -10,6 +10,10 @@ internal class RestaurantSeeder(RestaurantDbContext context) : IRestaurantSeeder
     private readonly RestaurantDbContext _context = context;
     public async Task SeedAsync()
     {
+        if(_context.Database.GetPendingMigrations().Any())
+        {
+            await _context.Database.MigrateAsync();
+        }
         if (await _context.Database.CanConnectAsync())
         {
             if (!await _context.Restaurants.AnyAsync())
@@ -36,7 +40,16 @@ internal class RestaurantSeeder(RestaurantDbContext context) : IRestaurantSeeder
     }
     private IEnumerable<Restaurant> GetRestaurants()
     {
-        List<Restaurant> restaurants = [
+        ApplicationUser owner = new()
+        {
+            Id = Guid.NewGuid().ToString(),
+            UserName = "owner",
+            NormalizedUserName = "OWNER",
+            Email = "owner@gmail.com",
+            NormalizedEmail ="OWNER@GMAIL.COM",
+            EmailConfirmed = true,
+        };
+        List <Restaurant> restaurants = [
             new()
             {
                 Name = "KFC",
@@ -67,7 +80,8 @@ internal class RestaurantSeeder(RestaurantDbContext context) : IRestaurantSeeder
                     Street = "Cork St 5",
                     PostalCode = "WC2N 5DU"
                 },
-
+                OwnerId= owner.Id,
+                Owner=owner
             },
             new ()
             {
@@ -82,7 +96,10 @@ internal class RestaurantSeeder(RestaurantDbContext context) : IRestaurantSeeder
                     City = "London",
                     Street = "Boots 193",
                     PostalCode = "W1F 8SR"
-                }
+                },
+                OwnerId= owner.Id,
+                Owner=owner
+
             }
         ];
 
